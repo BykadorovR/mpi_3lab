@@ -11,8 +11,8 @@
 //Подключаем библиотеку
 #pragma comment(lib,"winmm.lib")
 //Определяем путь файла
-#define NAME_OF_FILE "C:\\LinearSeparability\\linearseparability.txt"
-#define NAME_OF_FILE_MANUAL_INPUT "C:\\LinearSeparability\\manualinput.txt"
+#define NAME_OF_FILE "C:\\mpi_3lab\\linearseparability.txt"
+#define NAME_OF_FILE_MANUAL_INPUT "C:\\mpi_3lab\\manualinput.txt"
 
 using namespace std;
 
@@ -83,7 +83,7 @@ int main (int argc, const char *argv[]) {
 			exit(1);
 		}
 		fileStream>>countOfPoints1;
-		cout<<countOfPoints1<<" ";
+		//cout<<countOfPoints1<<" ";
 		s1 = vector<point>(countOfPoints1);
 		for (int i=0; i<countOfPoints1; i++) {
 			double valueFromFile;
@@ -104,31 +104,12 @@ int main (int argc, const char *argv[]) {
 			s2[i].setPosition(s2[i].getX(), valueFromFile);
 		}
 	}
+	vector<int> hull1;
+	geom.quickHull(s1, hull1);
 
-	vector<int> LR(2);
-	LR = geom.getSideElems(s1);
-	cout<<endl<<LR[0]<<" LEFT "<<endl;
-	cout<<LR[1]<<" RIGHT "<<endl;
-	line topLine = line(s1[LR[0]], s1[LR[1]]);
-	//Выше (левее)
-	vector<int> h1;
-	//Ниже (правее)
-	vector<int> h2;
-	for (int i=0; i<countOfPoints1; ++i) {
-		cout<<i<<" i "<<LR[0]<<" LR[0] "<<endl;
-		cout<<i<<" i "<<LR[1]<<" LR[1] "<<endl;
-		if (i!=LR[0] && i!=LR[1]) {
-		    if (topLine.checkRelativePointAndLine(s1[i]) > 0) {
-		    	h1.push_back(i);
-		    }
-		    if (topLine.checkRelativePointAndLine(s1[i]) < 0) {
-		        h2.push_back(i);
-		    }
-		}
-    }
 
-    cout<<geom.getTopElement(s1, h1, topLine)<<" MAX DISTANCE"<<endl;
-
+    for (int i=0; i<hull1.size(); i++)
+    	cout<<hull1[i]<<endl;
 	DWORD timeEnd=timeGetTime();
 	DWORD time=timeEnd-timeStart;
 	//Выводим время выполнения

@@ -14,9 +14,9 @@ double line::distanceToPoint(const point &point) const {
 }
 int line::checkRelativePointAndLine(const point &point) const {
     int relative = a*point.getX() + b*point.getY() + c;
-    std::cout<<relative<<" relative ";
-    if (relative < 0) std::cout<<" Higher (Left) "<<std::endl;
-    if (relative > 0) std::cout<<" Lower (Right) "<<std::endl;
+    //std::cout<<relative<<" relative ";
+    //if (relative < 0) std::cout<<" Higher (Left) "<<std::endl;
+    //if (relative > 0) std::cout<<" Lower (Right) "<<std::endl;
     return relative;
 }
 
