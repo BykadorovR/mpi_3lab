@@ -34,6 +34,7 @@ int main (int argc, const char *argv[]) {
 	timeStart = timeGetTime();
 
 	if (mode == 1) {
+
 		if (argc>1){
 			countOfPoints1 = atoi(argv[1]);
 			countOfPoints2 = atoi(argv[2]);
@@ -41,6 +42,7 @@ int main (int argc, const char *argv[]) {
 
 		s1 = vector<point> (countOfPoints1);
 		s2 = vector<point> (countOfPoints2);
+
 		//Открываем файл для записи
 		fileStream.open(NAME_OF_FILE, ios::in | ios::out | ios::binary | ios::trunc);
 		if (fileStream.fail()){
@@ -50,11 +52,10 @@ int main (int argc, const char *argv[]) {
 
 		//Инициализируем случайными значениями
 		for (int i=0; i<countOfPoints1; i++)
-			s1[i].setPosition(static_cast<double>((1+rand()%1000)*0.1), static_cast<double>((1+rand()%1000)*0.1));
-
+			s1[i].setPosition(static_cast<double>((1+rand()%100)*0.1), static_cast<double>((1+rand()%100)*0.1));
 
 		for (int i=0; i<countOfPoints2; i++)
-			s2[i].setPosition(static_cast<double>((1+rand()%1000)*0.1), static_cast<double>((1+rand()%1000)*0.1));
+			s2[i].setPosition(static_cast<double>((1+rand()%100)*0.1), static_cast<double>((1+rand()%100)*0.1));
 
 
 		//Записываем матрицу в файл
@@ -75,7 +76,6 @@ int main (int argc, const char *argv[]) {
 		}
 
 	} else if (mode == 2) {
-
 	//Открываем файл для чтения
 		fileStream.open(NAME_OF_FILE_MANUAL_INPUT);
 		if (fileStream.fail()){
@@ -83,7 +83,6 @@ int main (int argc, const char *argv[]) {
 			exit(1);
 		}
 		fileStream>>countOfPoints1;
-		//cout<<countOfPoints1<<" ";
 		s1 = vector<point>(countOfPoints1);
 		for (int i=0; i<countOfPoints1; i++) {
 			double valueFromFile;
@@ -91,10 +90,8 @@ int main (int argc, const char *argv[]) {
 			s1[i].setPosition(valueFromFile, s1[i].getY());
 			fileStream>>valueFromFile;
 			s1[i].setPosition(s1[i].getX(), valueFromFile);
-
 		}
 		fileStream>>countOfPoints2;
-		//cout<<countOfPoints2<<" ";
 		s2 = vector<point>(countOfPoints2);
 		for (int i=0; i<countOfPoints2; i++) {
 			double valueFromFile;
@@ -105,11 +102,17 @@ int main (int argc, const char *argv[]) {
 		}
 	}
 	vector<int> hull1;
+	vector<int> hull2;
 	geom.quickHull(s1, hull1);
-
-
-    for (int i=0; i<hull1.size(); i++)
+	geom.quickHull(s2, hull2);
+	cout<<"HULL1"<<endl;
+    for (int i=0; i<hull1.size(); i++) {
     	cout<<hull1[i]<<endl;
+    }
+    cout<<"HULL2"<<endl;
+    for (int i=0; i<hull2.size(); i++) {
+    	cout<<hull2[i]<<endl;
+    }
 	DWORD timeEnd=timeGetTime();
 	DWORD time=timeEnd-timeStart;
 	//Выводим время выполнения
