@@ -1,0 +1,15 @@
+cmake_minimum_required ( VERSION 2.8 )
+
+project ( Linear )
+
+set ( SRC_DIR ${PROJECT_SOURCE_DIR}/src )
+set ( APP_NAME linearSeparability )
+# set( CMAKE_BUILD_TYPE RELEASE )
+include_directories ( include )
+list(APPEND SRC ${SRC_DIR}/linearSeparability.cpp )
+list(APPEND SRC ${SRC_DIR}/geometryOfHulls.cpp )
+list(APPEND SRC ${SRC_DIR}/line.cpp )
+list(APPEND SRC ${SRC_DIR}/point.cpp )
+link_directories( lib )
+add_executable ( ${APP_NAME} ${SRC} )
+target_link_libraries( ${APP_NAME} winmm.lib)
