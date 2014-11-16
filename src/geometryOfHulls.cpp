@@ -204,7 +204,8 @@ bool GeometryOfHulls::intersection(point p1, point q1, point p2, point q2) {
     	std::cout<<"general";
         return true;
     }
-    /*
+
+
     // Special Cases
     // p1, q1 and p2 are colinear and p2 lies on segment p1q1
     if (o1 == 0 && onSegment(p1, p2, q1)) return true;
@@ -217,7 +218,7 @@ bool GeometryOfHulls::intersection(point p1, point q1, point p2, point q2) {
 
      // p2, q2 and q1 are colinear and q1 lies on segment p2q2
     if (o4 == 0 && onSegment(p2, q1, q2)) return true;
-*/
+
     return false; // Doesn't fall in any of the above cases
  }
 
@@ -226,15 +227,15 @@ int GeometryOfHulls::orientation(point p, point q, point r)
     double val = (q.getY() - p.getY()) * (r.getX() - q.getX()) -
               (q.getX() - p.getX()) * (r.getY() - q.getY());
 
-    if (val < eps) return 0;  // colinear
+    if (val < 0) return 0;  // colinear
 
     return (val > 0)? 1: 2; // clock or counterclock wise
 }
 
 bool GeometryOfHulls::onSegment(point p, point q, point r)
 {
-    if (q.getX() <= std::max(p.getX(), r.getX()) && q.getX() >= std::min(p.getX(), r.getX()) &&
-        q.getY() <= std::max(p.getY(), r.getY()) && q.getY() >= std::min(p.getY(), r.getY()))
+    if ((q.getX() - std::max(p.getX(), r.getX())) <= eps  && (q.getX()-std::min(p.getX(), r.getX())>= eps) &&
+        (q.getY() -std::max(p.getY(), r.getY())<=eps ) && (q.getY() -std::min(p.getY(), r.getY())) >= eps )
        return true;
 
     return false;
