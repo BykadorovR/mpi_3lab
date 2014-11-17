@@ -16,17 +16,17 @@ double line::distanceToPoint(const point &point) const {
     return fabs(a*point.getX() + b*point.getY() + c)/sqrt((double)a*a + b*b);
 }
 
-
+const double eps = 1e-8;
 bool line::isLeft(const point &point) {
     double left = a*point.getX() + b*point.getY() + c;
     std::cout<<left<<" Left "<<std::endl;
 	//return ((point.getX()-l_.getX())*(point.getY()-r_.getY())-(point.getY()-l_.getY())*(point.getX()-r_.getX()))<0;
-    return left < 0;
+    return left < -eps;
 }
 
 bool line::isRight(const point &point) {
 	double right = a*point.getX() + b*point.getY() + c;
 		//return ((point.getX()-l_.getX())*(point.getY()-r_.getY())-(point.getY()-l_.getY())*(point.getX()-r_.getX()))>0;
-	return right > 0;
+	return right > eps;
 }
 
